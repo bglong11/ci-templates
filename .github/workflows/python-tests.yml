@@ -8,7 +8,7 @@ on:
       python-version:
         description: Python version to test with
         type: string
-        default: "3.11"
+        default: "3.12"
       package:
         description: Source package/folder for mypy ("." for script-style repos)
         type: string
@@ -31,9 +31,10 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
           if [ -f pyproject.toml ] && grep -q '^\[project\]' pyproject.toml; then
-            pip install -e ".[dev]" || pip install -e .
+            pip install -e ".[dev]" || pip install -e . \
+              || echo "::warning::not installable as a package; testing from the source tree"
           fi
-          pip install pytest pytest-cov pytest-xdist pytest-mock hypothesis pytest-regressions ruff mypy
+          pip install pytest pytest-cov pytest-xdist pytest-mock hypothesis pytest-regressions "ruff==0.14.14" mypy
 
       - name: Lint (ruff)
         run: ruff check .
