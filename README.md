@@ -20,7 +20,7 @@ jobs:
     uses: bglong11/ci-templates/.github/workflows/python-tests.yml@main
     with:
       package: my_package        # or "." for script-style repos
-      # python-version: "3.12"   # optional, default 3.11
+      # python-version: "3.12"   # optional, default 3.12
 ```
 
 Change this workflow once and every calling repo picks it up.
